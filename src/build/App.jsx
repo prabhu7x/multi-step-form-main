@@ -14,7 +14,8 @@ function App() {
       <div className="wrapper">
         <Sidebar />
         <Routes>
-          <Route path="/" element={<Personal_info />} />
+          {/* <Route path="/multi-step-form-main" element={<Personal_info />} /> */}
+          <Route index element={<Personal_info />} />
           <Route path="/plan" element={<Select_Plan />} />
           <Route path="/add_ons" element={<Add_ons />} />
           <Route path="/summary" element={<Summary />} />
