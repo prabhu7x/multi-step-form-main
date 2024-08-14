@@ -13,7 +13,7 @@ function App() {
     <div className="app">
       <div className="wrapper">
         <Sidebar />
-        <Routes>
+        <Routes basename="/multi-step-form-main">
           {/* <Route path="/multi-step-form-main" element={<Personal_info />} /> */}
           <Route index element={<Personal_info />} />
           <Route path="/plan" element={<Select_Plan />} />
