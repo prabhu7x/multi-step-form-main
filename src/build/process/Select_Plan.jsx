@@ -23,11 +23,8 @@ function Select_Plan() {
   }
   useEffect(()=>{
     setChoosePlanType({arcade: true})
-    console.log('useeffect',choosePlanType.arcade, choosePlanType.advance, choosePlanType.pro);
+    console.log('useEffect',choosePlanType.arcade, choosePlanType.advance, choosePlanType.pro);
   },[])
-  // const [arcade, setArcade] = useState(false);
-  // const [advance, setAdvance] = useState(false);
-  // const [pro, setPro] = useState(false);
 
 
   const next = () => {
@@ -112,7 +109,7 @@ function Select_Plan() {
 
       <div className="bottom">
         <button className="btn go_back" onClick={Go_back}>
-          Go back
+          Go Back
         </button>
         <button className="btn next" onClick={next}>
           Next

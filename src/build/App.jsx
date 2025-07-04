@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import Personal_info from "./process/Personal_info";
 import Select_Plan from "./process/Select_Plan";
 import Add_ons from "./process/Add_ons";

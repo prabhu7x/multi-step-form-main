@@ -51,7 +51,7 @@ function Add_ons() {
 
       <div className="bottom">
         <button className="btn go_back" onClick={Go_back}>
-          Go back
+          Go Back
         </button>
         <button className="btn next" onClick={next}>
           Next
