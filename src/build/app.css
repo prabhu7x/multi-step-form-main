@@ -474,7 +474,6 @@ hr {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: gray;
   }
   .app .wrapper {
       display: flex;
@@ -486,11 +485,12 @@ hr {
       border-radius: 0;
       align-items: center;
       box-shadow: 1px 1px 20px 2px #e0e0e0d1;
+      background-color: var(--Magnolia);
   }
   .wrapper main {
     margin: 2rem;
     position: absolute;
-    background-color: var(--Magnolia);
+    background-color: var(--Alabaster);
     padding: 0;
     border-radius: 10px;
     inset: 7.5% 1rem 0 1rem;
@@ -571,11 +571,18 @@ hr {
     left: 0;
     padding: 2rem;
     padding-bottom: 1rem;
-    background-color: var(--Magnolia);
+    background-color: var(--Alabaster);
   }
   .btn {
     width: 6.5rem;
     height: 2.5rem;
     font-size: .8rem;
+  }
+
+  .add_on .middle p {
+    font-size: .85rem;
+  }
+  .add_on .service_card div p:nth-child(2) {
+    font-size: .79rem;
   }
 }
