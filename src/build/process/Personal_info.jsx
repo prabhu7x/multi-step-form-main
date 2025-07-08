@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { add_user_details } from "./redux/AppSlice";
@@ -17,36 +17,48 @@ function Personal_info() {
 
   const name_ref = useRef();
   const [name, setName] = useState(user_name);
+  const isNameValid = name.trim() !== ''
 
   const [email, setEmail] = useState(user_email);
   const [validEmail, setValidEmail] = useState(false);
 
   const [phone, setPhone] = useState(user_phone);
-  const [phone_status, setPhone_status] = useState(true);
+  const isPhoneValide = phone.trim() !== ''
+
+  const [isValidData, setValidData] = useState(false)
 
   useEffect(() => {
     name_ref.current.focus();
   }, []);
-
+  
   useEffect(() => {
     const result = EMAIL_REGEX.test(email);
     if (result) {
       setValidEmail(true);
+    }else {
+      setValidEmail(false)
     }
   }, [email]);
-
-  const next = () => {
-    const status = Boolean(phone);
-    navigate("/plan");
-    if (status) {
-      setPhone_status(true);
-      navigate("/plan");
-      dispatch(add_user_details({ name, email, phone }));
-      console.log(name, email, phone);
-    } else {
-      setPhone_status(false);
+  
+  useEffect(()=>{
+    const userData = [isNameValid, validEmail, isPhoneValide]
+    const isValidData = userData.every(data => data === true)
+    if(isValidData){
+      setValidData(true)
     }
+
+  },[isNameValid, validEmail, isPhoneValide, email])
+  
+  
+  const next = () => {
+    
+    if (isValidData && validEmail) {
+      dispatch(add_user_details({ name, email, phone }));
+      navigate("/plan");
+    } 
   };
+
+  const styles = {alert: {borderColor: 'hsl(354, 84%, 57%)'}, normal: {borderColor: 'hsl(243, 100%, 62%)'}}
 
   //
   // return
@@ -66,9 +78,11 @@ function Personal_info() {
           type="text"
           placeholder="e.g Stephen King"
           onChange={(e) => setName(e.target.value)}
+          id="name"
+          style={!isNameValid ? styles.alert : styles.normal}
         />
         <p className="email">
-          <span>Email Address</span>{" "}
+          <span>Email Address</span>
           <span className="alert">
             {!validEmail ? "valid email required" : null}
           </span>
@@ -78,11 +92,13 @@ function Personal_info() {
           value={email}
           placeholder="e.g. stephenking@lorem.com"
           onChange={(e) => setEmail(e.target.value)}
+          id="email"
+          style={!validEmail ? styles.alert : styles.normal}
         />
         <p>
           <span>Phone Number</span>
           <span className="alert">
-            {!phone_status ? "This field is required" : null}{" "}
+            {!isPhoneValide ? "This field is required" : null}{" "}
           </span>
         </p>
         <input
@@ -91,6 +107,8 @@ function Personal_info() {
           onChange={(e) => setPhone(e.target.value)}
           placeholder="e.g. +1234 567 890"
           className="phone"
+          id="phone"
+          style={!isPhoneValide ? styles.alert : styles.normal}
         />
       </form>
 

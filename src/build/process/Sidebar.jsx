@@ -1,10 +1,7 @@
 import { useLocation } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
 
 function Sidebar() {
   const location = useLocation().pathname;
-  const isDesktop = useMediaQuery({maxResolution: 900})
-  console.log(console.log(isDesktop))
   return (
     <div className="sidebar">
       <ol className="custom-list">

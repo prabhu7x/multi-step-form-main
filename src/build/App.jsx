@@ -1,4 +1,3 @@
-import React from "react";
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import Personal_info from "./process/Personal_info";
 import Select_Plan from "./process/Select_Plan";
@@ -7,6 +6,7 @@ import Summary from "./process/Summary";
 import Thank_you from "./process/Thank_you";
 import Layout from "./Components/Layout";
 import './app.css'
+import NotFound from "./Components/NotFound";
 
 function App() {
   return (
@@ -20,6 +20,7 @@ function App() {
             <Route path="summary" element={<Summary />} />
             <Route path="thank_you" element={<Thank_you />} />
           </Route>
+            <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </>

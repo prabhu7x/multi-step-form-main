@@ -1,10 +1,20 @@
-import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Pick_add_ons } from "./redux/AppSlice";
 
 function Add_ons() {
   const navigate = useNavigate();
+  const userData = useSelector((state) => state.user.user_info);
+  const dispatch = useDispatch();
+
   const next = () => {
     navigate("/summary");
+  };
+  const data = useSelector((state) => state.user);
+  const add_ons = data.selected_add_ons;
+
+  const chooseAdd_ons = (obj) => {
+    dispatch(Pick_add_ons(obj));
   };
   const Go_back = () => {
     navigate("/plan");
@@ -17,36 +27,29 @@ function Add_ons() {
       </div>
 
       <div className="middle">
-        <div className="services">
-          <div className="service_card">
-          <input type="checkbox" />
-            <div>
-              <p>Online service</p>
-              <p>access to multiplayer games</p>
+        {userData.add_ons.map((data, i) =>{
+        const isChecked = add_ons.some(addon => addon.title === data.title)
+        return (
+          <div key={i} className={`services ${isChecked ? "checked" : null}`}>
+            <div className="service_card">
+              <input
+                checked={isChecked}
+                onChange={() => chooseAdd_ons(data)}
+                id={i}
+                type="checkbox"
+              />
+              <div>
+                <p>{data.title}</p>
+                <p>access to multiplayer games</p>
+              </div>
             </div>
+            <p>
+              {userData.plan_type
+                ? `+${data.price.yearly}/yr`
+                : `+${data.price.monthly}/mo`}
+            </p>
           </div>
-          <p>+$1/mo</p>
-        </div>
-        <div className="services">
-          <div className="service_card">
-            <input type="checkbox" />
-            <div>
-              <p>Larger storage</p>
-              <p>Extra 1 TB of cloud save</p>
-            </div>
-          </div>
-          <p>+$2/mo</p>
-        </div>
-        <div className="services">
-          <div className="service_card">
-            <input type="checkbox" />
-            <div>
-              <p>Customizable Profile</p>
-              <p>custom theme on your profile</p>
-            </div>
-          </div>
-          <p>+$2/mo</p>
-        </div>
+        )})}
       </div>
 
       <div className="bottom">

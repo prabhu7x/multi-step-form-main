@@ -1,56 +1,47 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import images from "../Components/Images";
 import { useDispatch, useSelector } from "react-redux";
-import { add_user_details, choose_plan } from "./redux/AppSlice";
+import { plan_validity, select_plan } from "./redux/AppSlice";
 
 function Select_Plan() {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.user);
   const navigate = useNavigate();
 
-  const [plan_type, setPlanType] = useState(data.user_info.plan_type);
-
-  const initialPlan_state = {
-    arcade: false,
-    advance: false,
-    pro: false
-  }
-  const [choosePlanType, setChoosePlanType] = useState(initialPlan_state)
-  const choosePlanType_handler = (plan)=>{
-    setChoosePlanType({...initialPlan_state, [plan]:!choosePlanType[plan]})
-    console.log(choosePlanType.arcade, choosePlanType.advance, choosePlanType.pro);
+  const [plan_type, setPlanType] = useState(data.user_info.yearly_plan_validity);
+// get plan name if clicked tag name (which is data-value) has same  name
+  const [choosePlanType, setChoosePlanType] = useState(data.selected_plan && data.selected_plan.type ? data.selected_plan : data.user_info.plan[0] )
+  
+  const choosePlanType_handler = (e,plan_mode,index)=>{
+    const clickedPlan_name = e.currentTarget.dataset.value 
+    const {type} = plan_mode
+    if(clickedPlan_name === type ){
+      const selected = data.user_info.plan[index]
+      setChoosePlanType(selected)
+      dispatch(select_plan(selected))
+    }
   }
   useEffect(()=>{
-    setChoosePlanType({arcade: true})
-    console.log('useEffect',choosePlanType.arcade, choosePlanType.advance, choosePlanType.pro);
-  },[])
+    if(data.selected_plan && data.selected_plan.type) {
+      setChoosePlanType(data.selected_plan)
+    }
+  },[data.selected_plan])
 
 
   const next = () => {
     navigate("/add_ons");
-    dispatch(add_user_details({ plan_type }));
-    dispatch(choose_plan("Pro"));
-    console.log(data.selected_plan);
+    dispatch(plan_validity(plan_type))
+    if(data.selected_plan === null) {
+      dispatch(select_plan(choosePlanType))
+    }
   };
   const Go_back = () => {
     navigate("/");
   };
-  //
-  const per_year = data.user_info.plan.yearly;
-  const per_month = data.user_info.plan.monthly;
   // toggle
   const toggle = () => {
     setPlanType(!plan_type);
   };
-  //
-  const select_plan = (plan1, plan2, selected_plan) => {
-    console.log(arcade, advance, pro);
-    plan1(false);
-    plan2(false);
-    selected_plan(true);
-  };
-  //
   // /main
   return (
     <div className="card plan">
@@ -62,41 +53,20 @@ function Select_Plan() {
       {/* middle */}
       <div className="select_plan middle">
         <div className="game_mode">
-          <div
-            onClick={() => choosePlanType_handler('arcade')}
-            className={`plan_card arcade ${choosePlanType.arcade ? "selected_plan" : null}`}
+
+          {data.user_info.plan.map((data, i)=><div key={i} data-value={data.type}
+            onClick={(e) => choosePlanType_handler(e,data,i)}
+            className={`plan_card ${data.type}  ${choosePlanType.type === data.type ? "selected_plan" : null}`}
           >
-            <img src={images.arcade} alt="" />
-            <h3>Arcade</h3>
+            <img src={data.image} alt="logo" />
+            <h3>{data.type}</h3>
             <p>
-              ${plan_type ? `${per_year.Arcade}/yr` : `${per_month.Arcade}/mo`}
+              ${plan_type ? `${data.price.yearly}/yr` : `${data.price.monthly}/mo`}
             </p>
             {plan_type ? <p className="free">2 months free</p> : null}
-          </div>
-
-          <div
-            onClick={() => choosePlanType_handler('advance')}
-            className={`plan_card advance ${choosePlanType.advance ? "selected_plan" : null}`}
-          >
-            <img src={images.advance} alt="" />
-            <h3>Advance</h3>
-            <p>
-              $
-              {plan_type ? `${per_year.Advance}/yr` : `${per_month.Advance}/mo`}
-            </p>
-            {plan_type ? <p className="free">2 months free</p> : null}
-          </div>
-
-          <div
-            onClick={() => choosePlanType_handler('pro')}
-            className={`plan_card  ${choosePlanType.pro ? "selected_plan" : null}`}
-          >
-            <img src={images.pro} alt="" />
-            <h3>Pro</h3>
-            <p>${plan_type ? `${per_year.Pro}/yr` : `${per_month.Pro}/mo`}</p>
-            {plan_type ? <p className="free">2 months free</p> : null}
-          </div>
+          </div>)}
         </div>
+
         <div className="toggle">
           <span className="validity">Monthly</span>
           <label className="switch">

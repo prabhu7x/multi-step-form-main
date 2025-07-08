@@ -38,7 +38,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--Pastel-blue);
+  background-color: var(--Magnolia);
 }
 
 .app .wrapper {
@@ -50,6 +50,7 @@
   width: clamp(800px, 800px, 800px);
   height: clamp(530px, 530px, 530px);
 }
+  /* padding: 1rem; */
 
 /* card */
 
@@ -82,7 +83,7 @@
 
 .alert {
   color: var(--Strawberry-red);
-  border-color: red;
+  border-color: var(--Strawberry-red);
 }
 
 .top h1 {
@@ -104,9 +105,10 @@ form input {
   text-indent: 1.4rem;
   font-family: "ubuntu bold";
   color: var(--Marine-blue);
+  outline: none;
 }
 .personal_info form input:focus {
-  border-color: red !important;
+  border-color: var(--Purplish-blue);
 }
 form input::placeholder {
   font-family: "ubuntu bold";
@@ -142,9 +144,14 @@ form input::placeholder {
   border-radius: 0.5rem;
   background-color: var(--Marine-blue);
   color: var(--Light-blue);
+  cursor: pointer;
   border: none;
 }
 .next:active {
+  background-color: var(--Purplish-blue);
+}
+.btn.next:hover {
+  opacity: 0.8;
   background-color: var(--Purplish-blue);
 }
 .go_back {
@@ -202,8 +209,8 @@ form input::placeholder {
   display: flex;
   justify-content: space-between;
 }
-.arcade,
-.advance {
+.Arcade,
+.Advance {
   margin-right: 1rem;
 }
 .plan_card {
@@ -341,7 +348,7 @@ h3 {
 /* add ons */
 
 .add_on .middle .services {
-  border: solid 1px var(--Purplish-blue);
+  border: solid 1px var(--Light-gray);
   border-radius: 9px;
   display: flex;
   justify-content: space-between;
@@ -350,9 +357,13 @@ h3 {
   padding: 1.2rem;
   color: var(--Marine-blue);
   margin: 1rem 0;
+  border: var(--Purplish-blue) solid 1px;
+}
+.add_on .middle .services.checked {
+  background-color: var(--Magnolia);
 }
 .add_on .middle {
-  margin-bottom: 1rem;
+margin-bottom: 1rem;
 }
 .add_on .service_card input {
   margin-right: 1.4rem;
@@ -372,6 +383,7 @@ h3 {
 .services input[type="checkbox"] {
   transform: scale(1.5);
   border: solid 1px var(--Cool-gray);
+  outline: none;
 }
 
 /*  summary */
@@ -383,9 +395,7 @@ h3 {
   margin-bottom: 3rem;
 }
 .summary .header {
-  background-color: var(--Magnolia);
   border-radius: 9px;
-  padding: 1rem;
 }
 
 .summary .item,
@@ -422,7 +432,7 @@ hr {
   color: var(--Cool-gray);
 }
 .summary .total {
-  margin: 1rem;
+  padding-top: 2rem;
 }
 .summary .total h3 {
   color: var(--Purplish-blue);
@@ -475,14 +485,16 @@ hr {
       position: relative;
       border-radius: 0;
       align-items: center;
+      box-shadow: 1px 1px 20px 2px #e0e0e0d1;
   }
   .wrapper main {
     margin: 2rem;
     position: absolute;
     background-color: var(--Magnolia);
-    top: 8.5%;
     padding: 0;
     border-radius: 10px;
+    inset: 7.5% 1rem 0 1rem;
+    height: fit-content;
   }
   .sidebar {
     border-radius: 0; 
@@ -502,6 +514,7 @@ hr {
   .card {
       width: auto;
       height: auto;
+      /* margin: 4rem; */
   }
   .top p {
     padding-bottom: 1rem;
@@ -527,8 +540,8 @@ hr {
     margin-left: 4rem;
   }
 
-.arcade,
-.advance {
+.Arcade,
+.Advance {
   margin-right: 0;
 }
   
@@ -558,6 +571,7 @@ hr {
     left: 0;
     padding: 2rem;
     padding-bottom: 1rem;
+    background-color: var(--Magnolia);
   }
   .btn {
     width: 6.5rem;
